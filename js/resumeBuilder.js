@@ -5,6 +5,10 @@ var formattedRole = HTMLheaderRole.replace("%data%","Web Developer");
 
 $("#header").append(formattedName);
 <<<<<<< HEAD
+<<<<<<< HEAD
+$("#header").append(formattedRole);
+>>>>>>> parent of 7a804f7... Error?
+=======
 $("#header").append(formattedRole);
 >>>>>>> parent of 7a804f7... Error?
 =======
