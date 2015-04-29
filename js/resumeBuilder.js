@@ -13,7 +13,7 @@ var work = [
 {
 	"employer":"Meldon",
 	"title":"VP",
-	"location":"Stony Plain",
+	"location":"Rekyavik",
 	"dates":"1997-2003",
 	"description":"White"
 }
@@ -29,7 +29,7 @@ var projects = [
 	"title":"Resume",
 	"dates":"Apr 22 - Apr 30",
 	"description":"This page",
-	"images": ["images/fry.jpg","images/197x148.gif"]
+	"images": ["images/197x148.gif","images/fry.jpg"]
 },
 {
 	"title":"Portfolio",
@@ -38,6 +38,19 @@ var projects = [
 	"images": ["images/197x148.gif","images/fry.jpg"]
 }
 ];
+
+projects.display = function () {
+	for (var i = 0; i < this.length; i++) {
+		$("#projects").append(HTMLprojectStart);
+		$(".project-entry:last").append(HTMLprojectTitle.replace("%data%",this[i].title)
+			+HTMLprojectDates.replace("%data%",this[i].dates)
+			+HTMLprojectDescription.replace("%data%",this[i].description)
+			+HTMLprojectImage.replace("%data%",this[i].images[0]));
+	}
+}
+
+projects.display();
+
 
 /*bio contains a name, role, welcomeMessage, contacts object and 
 skills array. The 
@@ -54,8 +67,19 @@ var bio = {
 		"email":"Fake.em@il.com",
 		"location":"Edmonton"
 	},
-	"skills": ["Nunchuck Skills","Javascript","Awesomeness"]
+	"skills": ["Nunchuck Skills","Javascript","Awesomeness"],
+	"pic":"images/fry.jpg"
 };
+
+$("#header").append(HTMLheaderName.replace("%data%",bio.name) 
+	+HTMLheaderRole.replace("%data%",bio.role));
+
+$("#header").append(HTMLmobile.replace("%data%",bio.contacts.mobile)
+	+HTMLemail.replace("%data%",bio.contacts.email)
+	+HTMLlocation.replace("%data%",bio.contacts.location));
+
+$("#header").append(HTMLbioPic.replace("%data%",bio.pic));
+$("#header").append(HTMLwelcomeMsg.replace("%data%",bio.welcomeMessage));
 
 /*education contains an array of schools. Each school object in 
 schools contains a name, 
@@ -77,10 +101,37 @@ var education = [
 },
 {
 	"name":"UofNot",
-	"location":"Bah Sing Seh",
+	"location":"Kowloon",
 	"degree":"Gong Fu",
 	"majors":["Air Bending"],
 	"dates":"2007 - 2008",
 	"URL":"www.google.ca"
 }
 ];
+
+if (bio.skills) {
+	$("#header").append(HTMLskillsStart);
+
+	bio.skills.forEach(function f(skill) {
+		$("#skills").append(HTMLskills.replace("%data%",skill));
+	} );
+}
+
+function displayWork() {
+	for (var w in work) {
+		$("#workExperience").append(HTMLworkStart);
+		$(".work-entry:last").append(HTMLworkEmployer.replace("%data%",work[w].employer) + 
+			HTMLworkTitle.replace("%data%",work[w].title));
+		$(".work-entry:last").append(HTMLworkDates.replace("%data%",work[w].dates));
+		$(".work-entry:last").append(HTMLworkLocation.replace("%data%",work[w].location));
+		$(".work-entry:last").append(HTMLworkDescription.replace("%data%",work[w].description));
+	}
+}
+
+displayWork();
+
+$(document).click(function(loc) {
+  logClicks(loc.pageX,loc.pageY)
+});
+
+$("#mapDiv").append(googleMap);
